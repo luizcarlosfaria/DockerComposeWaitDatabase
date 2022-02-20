@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  waitdatabaseconsoleapp:
+    image: ${DOCKER_REGISTRY-}waitdatabaseconsoleapp
+    build:
+      context: .
+      dockerfile: WaitDatabaseConsoleApp/Dockerfile
+    networks:
+    - app_wait
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:5
+    #restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: senha
+      MYSQL_DATABASE: dbexemplo
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+    networks:
+    - app_wait
+
+networks:
+  app_wait:
+    driver: bridge
+
+

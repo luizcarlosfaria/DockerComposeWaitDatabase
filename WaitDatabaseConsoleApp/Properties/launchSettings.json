@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WaitDatabaseConsoleApp": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
