@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: WaitDatabaseConsoleApp/Dockerfile
     networks:
-    - app_wait
+      - app_wait
     depends_on:
       db:
         condition: service_healthy
@@ -15,18 +15,13 @@ services:
   db:
     image: mysql:5
     #restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_USER: usuario
-      MYSQL_PASSWORD: senha
-      MYSQL_DATABASE: dbexemplo
+    env_file:
+      - config.env
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
     networks:
-    - app_wait
+      - app_wait
 
 networks:
   app_wait:
     driver: bridge
-
-
